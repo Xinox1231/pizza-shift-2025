@@ -5,10 +5,12 @@ import com.example.pizza_shift_2025.common.Resource
 import com.example.pizza_shift_2025.pizza_screen.data.PizzasRepositoryImpl
 import com.example.pizza_shift_2025.pizza_screen.domain.PizzasRepository
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class PizzaListScreenViewModel: ViewModel() {
+class PizzaListScreenViewModel @Inject constructor(
+    private val repository: PizzasRepository
+): ViewModel() {
 
-    private val repository: PizzasRepository = PizzasRepositoryImpl()
 
     val screenState = repository.loadPizzas().map {
         when(it){

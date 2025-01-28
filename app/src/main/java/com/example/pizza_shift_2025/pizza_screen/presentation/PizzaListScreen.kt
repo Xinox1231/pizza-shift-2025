@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.pizza_shift_2025.R
+import com.example.pizza_shift_2025.common.di.getApplicationComponent
 import com.example.pizza_shift_2025.pizza_screen.domain.model.Pizza
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +50,9 @@ fun PizzaListScreen() {
                 .padding(paddingValues)
         ) {
 
-            val viewModel: PizzaListScreenViewModel = viewModel()
+            val component = getApplicationComponent()
+            val viewModel: PizzaListScreenViewModel =
+                viewModel(factory = component.getViewModelFactory())
             val pizzasList by
             viewModel.screenState.collectAsState(PizzaListScreenState.Initial)
 
