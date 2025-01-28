@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -59,6 +60,25 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    //Retrofit
+    implementation(libs.retrofit)
+
+    //OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //Gson
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+
+    //Coil
+    implementation(libs.coil)
+
+    //Dagger2
+    implementation(libs.dagger.android)
+    ksp(libs.dagger.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
