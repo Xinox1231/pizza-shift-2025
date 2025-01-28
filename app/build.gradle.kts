@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    //ViewModelCompose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
     //Retrofit
     implementation(libs.retrofit)
 
@@ -73,7 +76,8 @@ dependencies {
     implementation(libs.converter.gson)
 
     //Coil
-    implementation(libs.coil)
+    implementation(libs.coil.kt.coil.compose)
+
 
     //Dagger2
     implementation(libs.dagger.android)
