@@ -78,10 +78,12 @@ dependencies {
     //Coil
     implementation(libs.coil.kt.coil.compose)
 
-
     //Dagger2
     implementation(libs.dagger.android)
     ksp(libs.dagger.compiler)
+
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
