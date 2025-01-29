@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -57,14 +58,18 @@ fun PizzaListScreen() {
             viewModel.screenState.collectAsState(PizzaListScreenState.Initial)
 
             when (val state = pizzasList) {
-                is PizzaListScreenState.Initial -> {}
+                is PizzaListScreenState.Initial -> {
+                    //Решил оставить пустым, пусть Initial будет аналогом null
+                }
 
                 is PizzaListScreenState.Loading -> {
                     PizzaLoadingScreen()
                 }
 
                 is PizzaListScreenState.Error -> {
-                    PizzaErrorScreen(state)
+                    PizzaErrorScreen(state) {
+                        viewModel.loadPizzas()
+                    }
                 }
 
                 is PizzaListScreenState.Pizzas -> {
@@ -91,7 +96,6 @@ private fun PizzaLoadingScreen() {
 private fun PizzaList(state: PizzaListScreenState.Pizzas) {
     LazyColumn {
         items(state.pizzas) { pizza ->
-            Log.d("TAG", pizza.imageUrl)
             PizzaItem(
                 pizza = pizza,
                 modifier = Modifier
@@ -106,12 +110,21 @@ private fun PizzaList(state: PizzaListScreenState.Pizzas) {
 }
 
 @Composable
-private fun PizzaErrorScreen(state: PizzaListScreenState.Error) {
-    Text(
-        text = state.message,
-        color = Color.Red,
-        modifier = Modifier.padding(16.dp)
-    )
+private fun PizzaErrorScreen(state: PizzaListScreenState.Error, onButtonClickListener: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = state.message,
+            color = Color.Red,
+            modifier = Modifier.padding(16.dp)
+        )
+        Button(onClick = {
+            onButtonClickListener.invoke()
+        }) {
+            Text(text = stringResource(id = R.string.pizza_screen_error_button))
+        }
+    }
 }
 
 @Composable
