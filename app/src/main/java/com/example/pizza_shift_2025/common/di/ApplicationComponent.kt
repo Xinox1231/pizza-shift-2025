@@ -4,16 +4,19 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import com.example.pizza_shift_2025.common.data.remote.ApiFactory
 import com.example.pizza_shift_2025.common.presentation.PizzaApplication
 import com.example.pizza_shift_2025.common.presentation.ViewModelFactory
 import com.example.pizza_shift_2025.pizza_screen.di.PizzaModule
 import dagger.Component
 
-
-@Component(modules = [ViewModelModule::class, PizzaModule::class])
+@ApplicationScope
+@Component(modules = [ViewModelModule::class, PizzaModule::class, RemoteModule::class])
 interface ApplicationComponent {
 
     fun getViewModelFactory(): ViewModelFactory
+
+    fun apiFactory(): ApiFactory
 
     @Component.Factory
     interface Factory {
