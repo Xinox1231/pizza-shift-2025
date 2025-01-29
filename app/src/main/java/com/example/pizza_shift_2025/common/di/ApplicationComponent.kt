@@ -2,6 +2,7 @@ package com.example.pizza_shift_2025.common.di
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.example.pizza_shift_2025.common.presentation.PizzaApplication
 import com.example.pizza_shift_2025.common.presentation.ViewModelFactory
@@ -24,6 +25,7 @@ interface ApplicationComponent {
 
 @Composable
 fun getApplicationComponent(): ApplicationComponent {
+    val context = LocalContext.current
     Log.d("RECOMPOSITION_TAG", "getApplicationComponent")
-    return (LocalContext.current.applicationContext as PizzaApplication).component
+    return remember(context) { (context.applicationContext as PizzaApplication).component }
 }
