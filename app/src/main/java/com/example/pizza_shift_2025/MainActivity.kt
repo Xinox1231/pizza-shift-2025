@@ -17,7 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pizza_shift_2025.authorization_screen.ui.AuthorizationScreen
 import com.example.pizza_shift_2025.common.di.getApplicationComponent
 import com.example.pizza_shift_2025.pizza_screen.presentation.PizzaListScreen
-import com.example.pizza_shift_2025.ui.theme.Pizzashift2025Theme
+import com.example.pizza_shift_2025.common.ui.theme.Pizzashift2025Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

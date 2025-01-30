@@ -10,4 +10,6 @@ sealed class AuthenticationScreenState {
     data class Error(
         val message: String
     ): AuthenticationScreenState()
+
+    data object Authorized: AuthenticationScreenState()
 }

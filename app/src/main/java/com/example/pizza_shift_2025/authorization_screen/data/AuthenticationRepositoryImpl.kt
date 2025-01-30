@@ -1,14 +1,15 @@
 package com.example.pizza_shift_2025.authorization_screen.data
 
-import com.example.pizza_shift_2025.authorization_screen.data.local.TokenStorage
 import com.example.pizza_shift_2025.authorization_screen.data.remote.AuthenticationService
 import com.example.pizza_shift_2025.authorization_screen.domain.AuthenticationRepository
 import com.example.pizza_shift_2025.authorization_screen.domain.model.AuthState
+import com.example.pizza_shift_2025.authorization_screen.domain.model.AuthorizationRequest
+import com.example.pizza_shift_2025.authorization_screen.domain.model.AuthorizationResponse
 import com.example.pizza_shift_2025.authorization_screen.domain.model.OtpRequest
 import com.example.pizza_shift_2025.authorization_screen.domain.model.OtpResponse
+import com.example.pizza_shift_2025.authorization_screen.domain.model.Token
 import com.example.pizza_shift_2025.common.Constants
 import com.example.pizza_shift_2025.common.Resource
-import com.example.pizza_shift_2025.common.data.remote.ApiFactoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,25 +20,11 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val tokenStorage: TokenStorage,
+    private val authManager: AuthManager,
     private val apiService: AuthenticationService
 ) : AuthenticationRepository {
 
-    private val checkAuthStateEvents = MutableSharedFlow<Unit>(replay = 1)
-    private val scope = CoroutineScope(Dispatchers.IO)
 
-    private val authState = flow<AuthState> {
-        checkAuthStateEvents.emit(Unit)
-        checkAuthStateEvents.collect {
-            val token = tokenStorage.getToken()
-            val isLogged = token != null
-            if (isLogged) emit(AuthState.Authorized) else emit(AuthState.NotAuthorized)
-        }
-    }.stateIn(
-        scope = scope,
-        started = SharingStarted.Lazily,
-        initialValue = AuthState.Initial
-    )
 
     override suspend fun createOtp(otpRequest: OtpRequest): Resource<OtpResponse> {
         val otpRequestDto = otpRequest.toDto()
@@ -51,9 +38,23 @@ class AuthenticationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAuthState(): StateFlow<AuthState> = authState
+    override suspend fun signIn(authorizationRequest: AuthorizationRequest): Resource<Unit> {
+        val authorizationRequestDto = authorizationRequest.toDto()
+        val response = apiService.signIn(authorizationRequestDto)
+        if (response.success) {
+            val authorizationResponse = response.toDomain()
+            val token = authorizationResponse.token
+            authManager.saveToken(Token(token))
+            return Resource.Success(Unit)
+        } else {
+            val error = response.errorReason ?: Constants.UNKNOWN_ERROR
+            return Resource.Error(error)
+        }
+    }
+
+    override fun getAuthState(): StateFlow<AuthState> = authManager.authState
 
     override suspend fun refreshAuthState() {
-        checkAuthStateEvents.emit(Unit)
+        authManager.checkAuthStateEvents.emit(Unit)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.pizza_shift_2025.ui.theme
+package com.example.pizza_shift_2025.common.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

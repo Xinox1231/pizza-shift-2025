@@ -1,4 +1,4 @@
-package com.example.pizza_shift_2025.ui.theme
+package com.example.pizza_shift_2025.common.ui.theme
 
 import android.app.Activity
 import android.os.Build

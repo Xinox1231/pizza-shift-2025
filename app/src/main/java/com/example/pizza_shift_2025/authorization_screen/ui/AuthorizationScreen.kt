@@ -1,5 +1,6 @@
 package com.example.pizza_shift_2025.authorization_screen.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,7 +21,7 @@ import com.example.pizza_shift_2025.R
 import com.example.pizza_shift_2025.authorization_screen.presentation.AuthenticationViewModel
 import com.example.pizza_shift_2025.common.Constants
 import com.example.pizza_shift_2025.common.di.getApplicationComponent
-import com.example.pizza_shift_2025.ui.theme.brandOrange
+import com.example.pizza_shift_2025.common.ui.theme.brandOrange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -117,7 +118,19 @@ private fun observeViewModel(
         }
 
         is AuthenticationScreenState.OtpRequestCooldown -> {
-            OtpRequestCooldown(screenState)
+            OtpRequestCooldown(
+                state = screenState,
+                onSignIn = { otpCode ->
+                    viewModel.signIn(
+                        phone = phoneNumber,
+                        otpCode = otpCode
+                    )
+                })
+        }
+
+        is AuthenticationScreenState.Authorized -> {
+            Log.d("AuthorizationScreen", "AUTHORIZED URAAAAAAAAA")
+            //Закрыть экран
         }
     }
 }
@@ -190,7 +203,10 @@ private fun RequestOtpCode(onRequestCode: () -> Unit) {
 
 
 @Composable
-private fun OtpRequestCooldown(state: AuthenticationScreenState.OtpRequestCooldown) {
+private fun OtpRequestCooldown(
+    state: AuthenticationScreenState.OtpRequestCooldown,
+    onSignIn: (String) -> Unit
+) {
 
     var otpCode by rememberSaveable { mutableStateOf(Constants.EMPTY_STRING) }
     val secondsLeft = state.secondsLeft
@@ -207,7 +223,7 @@ private fun OtpRequestCooldown(state: AuthenticationScreenState.OtpRequestCooldo
     CustomButton(
         text = stringResource(id = R.string.authorization_screen_sign_in),
         onClick = {
-            //viewmodel.signIn()
+            onSignIn.invoke(otpCode)
         }
     )
 

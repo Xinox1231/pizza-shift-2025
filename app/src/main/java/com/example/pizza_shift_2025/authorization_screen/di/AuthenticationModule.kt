@@ -6,7 +6,6 @@ import com.example.pizza_shift_2025.authorization_screen.data.local.TokenStorage
 import com.example.pizza_shift_2025.authorization_screen.data.remote.AuthenticationService
 import com.example.pizza_shift_2025.authorization_screen.domain.AuthenticationRepository
 import com.example.pizza_shift_2025.common.data.remote.ApiFactory
-import com.example.pizza_shift_2025.pizza_screen.data.remote.PizzaService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
