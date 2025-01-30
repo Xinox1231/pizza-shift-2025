@@ -7,6 +7,7 @@ object Constants {
     const val UNKNOWN_ERROR = "Unknown error"
 
     const val MILLIS_IN_SEC = 1000L
-    const val ZERO_TIME_TO_REFRESH = 0
+
+    const val EMPTY_STRING = ""
 
 }

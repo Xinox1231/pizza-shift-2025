@@ -1,5 +1,6 @@
 package com.example.pizza_shift_2025.common.di
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -8,6 +9,7 @@ import com.example.pizza_shift_2025.common.data.remote.ApiFactory
 import com.example.pizza_shift_2025.common.presentation.PizzaApplication
 import com.example.pizza_shift_2025.common.presentation.ViewModelFactory
 import com.example.pizza_shift_2025.pizza_screen.di.PizzaModule
+import dagger.BindsInstance
 import dagger.Component
 
 @ApplicationScope
@@ -21,8 +23,9 @@ interface ApplicationComponent {
     @Component.Factory
     interface Factory {
 
-        //Если понадобится что-то передать в граф
-        fun create(): ApplicationComponent
+        fun create(
+            @BindsInstance application: Application
+        ): ApplicationComponent
     }
 }
 

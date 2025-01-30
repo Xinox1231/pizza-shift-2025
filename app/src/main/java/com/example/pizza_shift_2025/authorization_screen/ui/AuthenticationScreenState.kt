@@ -1,12 +1,9 @@
-package com.example.pizza_shift_2025.authorization_screen.presentation
+package com.example.pizza_shift_2025.authorization_screen.ui
 
 sealed class AuthenticationScreenState {
     data object OtpNotRequested: AuthenticationScreenState()
-    data class OtpRequestAllowed(
-        val phone: String
-    ): AuthenticationScreenState()
+    data object OtpRequestAllowed : AuthenticationScreenState()
     data class OtpRequestCooldown(
-        val phone: String,
         val secondsLeft: Int
     ): AuthenticationScreenState()
 

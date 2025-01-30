@@ -3,4 +3,12 @@
     <string name="pizza_screen_pizza">Пицца</string>
     <string name="pizza_screen_price">От %d ₽</string>
     <string name="pizza_screen_error_button">Попробовать ещё раз</string>
+    <string name="authorization_screen_title">Авторизация</string>
+    <string name="authorization_screen_text">Введите проверочный код для входа в личный кабинет</string>
+    <string name="authorization_screen_phone_input">Телефон</string>
+    <string name="authorization_screen_otp_input">Проверочный код</string>
+    <string name="authorization_screen_send_otp">Продолжить</string>
+    <string name="authorization_screen_sign_in">Войти</string>
+    <string name="authorization_screen_cooldown_time">Запросить код повторно можно через %d секунд</string>
+    <string name="authorization_screen_request_otp">Запросить код ещё раз</string>
 </resources>
