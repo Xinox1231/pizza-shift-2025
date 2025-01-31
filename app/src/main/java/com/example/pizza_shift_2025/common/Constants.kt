@@ -5,4 +5,9 @@ object Constants {
     const val BASE_URL = "https://shift-intensive.ru/api/"
 
     const val UNKNOWN_ERROR = "Unknown error"
+
+    const val MILLIS_IN_SEC = 1000L
+
+    const val EMPTY_STRING = ""
+
 }
